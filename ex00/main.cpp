@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 23:06:12 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/09/30 13:15:52 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/09/30 15:46:51 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int main(int argc, char **argv)
 				continue;
 			double resValue = strtod(value.c_str(), NULL);
 			double resDate = strtod(date.c_str(), NULL);
-			(void)resDate;
 			if (resValue > 2147483647)
 			{
 				std::cout << "Error: too large a number." << std::endl;
@@ -76,15 +75,34 @@ int main(int argc, char **argv)
 				value = "";
 				continue;
 			}
-			for(size_t i=0; i<stringPair.size(); i++)
+			size_t i;
+			for(i=0; i<stringPair.size(); i++)
 			{
 				if(strtod(stringPair.at(i).first.c_str(), NULL) == resDate)
 				{
+					
 					stringPair.at(i).first.insert(4, "-");
 					stringPair.at(i).first.insert(7, "-");
 					std::cout << stringPair.at(i).first.c_str() << " => " << resValue << " = " << resValue * strtod(stringPair.at(i).second.c_str(), NULL) << std::endl;
 					break;
 				}
+			}
+			int tmpDate = resDate;
+			size_t	index = 0;
+			if (i == stringPair.size())
+			{
+				for(size_t i=0; i<stringPair.size(); i++)
+				{
+					double res = strtod(stringPair.at(i).first.c_str(), NULL);
+					if (res < resDate && tmpDate == resDate)
+						tmpDate = res;
+					if (res < resDate && res > tmpDate)
+					{
+						tmpDate = res;
+						index = i;
+					}
+				}
+				std::cout << stringPair.at(index).first.c_str() << " => " << resValue << " = " << resValue * strtod(stringPair.at(index).second.c_str(), NULL) << std::endl;
 			}
 			date = "";
 			value = "";
