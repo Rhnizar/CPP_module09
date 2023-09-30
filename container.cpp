@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   BitcoinExchange.hpp                                :+:      :+:    :+:   */
+/*   container.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/26 23:07:10 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/09/30 11:58:46 by rrhnizar         ###   ########.fr       */
+/*   Created: 2023/09/30 11:46:34 by rrhnizar          #+#    #+#             */
+/*   Updated: 2023/09/30 11:53:17 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BITCOINEXCHANGE_HPP
-#define BITCOINEXCHANGE_HPP
-
 #include <iostream>
-#include <fstream>
+#include <string>
+#include <utility> // for std::pair
 #include <vector>
 
-int	fillContainerWithData(std::vector<std::pair<std::string, std::string> > *stringPair);
-int findPipe(std::string str);
+int main() 
+{
+    std::vector<std::pair<std::string, std::string> > stringPair;
 
-#endif
+
+	stringPair.push_back(std::make_pair("Hello", "World")); 
+
+    std::cout << "First String: " << stringPair.at(0).first << std::endl;
+    std::cout << "Second String: " << stringPair.at(0).second << std::endl;
+
+    return 0;
+}
