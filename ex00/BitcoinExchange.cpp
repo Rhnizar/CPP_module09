@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 23:07:06 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/09/30 13:50:34 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/01 13:09:45 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,16 +114,9 @@ int	CheckLine(std::string line, int check, std::string *date, std::string *excha
 		}
 		if(CheckYearMonthDay(year, month, day) == 1 || CheckExchange_rate(*exchange_rate) == 1)
 			return 1;
-		// std::cout << "==>  " << year << std::endl;
-		// exit(1);
 		(*date).append(year);
 		(*date).append(month);
 		(*date).append(day);
-		// std::cout << "===>  year  : " << year << std::endl;
-		// std::cout << "===>  month : " << month << std::endl;
-		// std::cout << "===>  day   : " << day << std::endl;
-		// std::cout << "===>  exchange_rate   : " << exchange_rate << std::endl;
-		// exit(1);
 	}
 	return 0;
 }
