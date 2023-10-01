@@ -6,14 +6,14 @@
 #    By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/01 15:41:24 by rrhnizar          #+#    #+#              #
-#    Updated: 2023/10/01 15:42:40 by rrhnizar         ###   ########.fr        #
+#    Updated: 2023/10/01 20:55:30 by rrhnizar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 Name = RPN
 
-SRC = main.cpp RPM.cpp
+SRC = main.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
