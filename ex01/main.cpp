@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 15:42:45 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/02 12:37:25 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/04 13:47:33 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ int main(int argc, char **argv)
 	catch(std::exception& ex)
 	{
 		std::cerr << ex.what() << std::endl;
+	}
+	catch (int i)
+	{
+		std::cerr << "Error: division by " << i << std::endl;
 	}
 	return 0;
 }

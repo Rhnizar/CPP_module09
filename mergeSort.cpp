@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 12:40:22 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/03 13:53:26 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/03 17:59:47 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,12 @@ void    MergePart(int LowerIndex, int middle, int HigherIndex)
 {
     // declare two arry with same size the container
     // int array[container.size()];
+    // printf("here\n");
     int tmpArray[container.size()];
     for(int i=LowerIndex; i<=HigherIndex; i++)
         tmpArray[i] = container.at(i);
     int i = LowerIndex;
-    int j = middle + 1;
+    int j = middle + 1; 
     int k = LowerIndex;
     while (i<=middle && j<=HigherIndex)
     {
@@ -50,12 +51,13 @@ void    MergePart(int LowerIndex, int middle, int HigherIndex)
 
 void    doMergeSort(int LowerIndex, int HigherIndex)
 {
+    int middle = 0;
     if(LowerIndex < HigherIndex)
     {
-        int middle = LowerIndex + (HigherIndex - LowerIndex) / 2;
-        // std::cout << "middle: " << middle << std::endl;
+       middle = LowerIndex + (HigherIndex - LowerIndex) / 2;
         doMergeSort(LowerIndex, middle);
         doMergeSort(middle + 1, HigherIndex);
+        // std::cout << "middle: " << middle << std::endl;
         //merge and sort
         MergePart(LowerIndex, middle, HigherIndex);
     }
@@ -86,7 +88,7 @@ int main()
     }
 
     // Print the vector
-    std::cout << "numbers after sort : " << std::endl; 
+    std::cout << "numbers before sort : " << std::endl; 
     for (size_t i = 0; i < container.size(); ++i) {
         std::cout << container[i] << " ";
     }
@@ -96,7 +98,7 @@ int main()
 
     //dived problem to small problem
     doMergeSort(0, container.size()-1);
-    std::cout << "numbers before sort : " << std::endl; 
+    std::cout << "numbers after sort : " << std::endl; 
     for(size_t i=0; i<container.size(); i++)
         std::cout << container.at(i) << " ";
     std::cout << std::endl;

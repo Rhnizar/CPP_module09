@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 15:41:18 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/02 12:40:25 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/03 21:54:27 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,11 @@ int	CheckString_AndFillContainer(std::string str)
 				else if (oper == '*')
 					res = value2 * value1;
 				else if (oper == '/')
+				{
+					if (value1 == 0)
+						throw 0;
 					res = value2 / value1;
+				}
 				// printf("%d\n", res);
 				container.push_back(res);
 			}
