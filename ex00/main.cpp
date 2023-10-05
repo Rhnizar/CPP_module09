@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 23:06:12 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/01 14:52:21 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/05 15:40:12 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,14 @@ int main(int argc, char **argv)
 	if(argc > 1)
 	{
 		std::vector<std::pair<std::string, std::string> > stringPair;
-		if (fillContainerWithData(&stringPair) == 1)
+		int re = fillContainerWithData(&stringPair);
+		if (re == 1)
 		{
 			std::cerr << "error in databse !! " << std::endl;
 			return 1;
 		}
+		else if (re == 2)
+			return 1;
 		std::ifstream file;
 		file.open(argv[1]);
 		if(!file.is_open())
