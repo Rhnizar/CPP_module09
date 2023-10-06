@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 23:06:12 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/05 15:40:12 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/06 19:01:20 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,19 @@ int	checkInput(std::ifstream& file, std::vector<std::pair<std::string, std::stri
 	std::string line;
 	std::string date;
 	std::string value;
+	std::string year;
+	std::string month;
+	std::string day;
+	int checkLine1 = 0;
+	int	checkPoint = 0;
 	while (std::getline(file, line))
 	{
 		int check = 0;
-		if (line == "date | value")
+		if (line == "date | value" && checkLine1 == 0)
+		{
+			checkLine1++;
 			continue;
+		}
 		if(findPipe(line) == 0)
 		{
 			std::cout << "Error: bad input => " << line << std::endl;
@@ -29,11 +37,20 @@ int	checkInput(std::ifstream& file, std::vector<std::pair<std::string, std::stri
 		}
 		for(size_t i=0; i<line.length();i++)
 		{
-			if (line[i] == '-' && check == 0)
+			if (line[i] == '.')
+				checkPoint++;
+			if ((line[i] == '-' && check == 0 && i == 4) || (line[i] == '-' && check == 0 && i == 7))
 				continue;
 			else if (line[i] == '-' && check == 1)
 			{
 				std::cerr << "Error: not a positive number." << std::endl;
+				check = -9;
+				break;
+			}
+			else if ((isdigit(line[i]) == 0 && line[i] != '-' && line[i] != ' ' &&  line[i] != '|' && line[i] != '.')\
+				 || (line[i] == '-' && i != 4 && i != 7) || (checkPoint > 1))
+			{
+				std::cerr << "Error: bad input => " << line << std::endl;
 				check = -9;
 				break;
 			}
@@ -48,7 +65,11 @@ int	checkInput(std::ifstream& file, std::vector<std::pair<std::string, std::stri
 				value += line[i];
 		}
 		if (check == -9)
+		{
+			date = "";
+			value = "";
 			continue;
+		}
 		double resValue = strtod(value.c_str(), NULL);
 		double resDate = strtod(date.c_str(), NULL);
 		if (resValue > 2147483647)
@@ -56,6 +77,25 @@ int	checkInput(std::ifstream& file, std::vector<std::pair<std::string, std::stri
 			std::cerr << "Error: too large a number." << std::endl;
 			date = "";
 			value = "";
+			continue;
+		}
+		for(size_t i=0; i<date.length();i++)
+		{
+			if(i < 4)
+				year += date[i];
+			else if(i < 6)
+				month += date[i];
+			else if(i < 8)
+				day += date[i];
+		}
+		if(CheckYearMonthDay(year, month, day) == 1)
+		{
+			std::cerr << "Error: in this  date " << year << "-" << month << "-" << day << std::endl;
+			date = "";
+			value = "";
+			year = "";
+			month = "";
+			day = "";
 			continue;
 		}
 		size_t i;
@@ -85,17 +125,22 @@ int	checkInput(std::ifstream& file, std::vector<std::pair<std::string, std::stri
 					index = i;
 				}
 			}
-			std::cout << stringPair.at(index).first.c_str() << " => " << resValue << " = " << resValue * strtod(stringPair.at(index).second.c_str(), NULL) << std::endl;
+			date.insert(4, "-");
+			date.insert(7, "-");
+			std::cout << date.c_str() << " => " << resValue << " = " << resValue * strtod(stringPair.at(index).second.c_str(), NULL) << std::endl;
 		}
 		date = "";
 		value = "";
+		year = "";
+		month = "";
+		day = "";
 	}
 	return 0;
 }
 
 int main(int argc, char **argv)
 {
-	if(argc > 1)
+	if(argc == 2)
 	{
 		std::vector<std::pair<std::string, std::string> > stringPair;
 		int re = fillContainerWithData(&stringPair);
@@ -117,6 +162,6 @@ int main(int argc, char **argv)
 		file.close();
 	}
 	else
-		std::cerr << "Error: could not open file." << std::endl;
+		std::cerr << "Usage: ./btc <input.txt>" << std::endl;
 	return 0;
 }
