@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 23:07:06 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/06 10:15:23 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/07 12:37:16 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	CheckLine(std::string line, int check, std::string *date, std::string *excha
 	return 0;
 }
 
-int	fillContainerWithData(std::vector<std::pair<std::string, std::string> > *stringPair)
+int	fillContainerWithData(std::set<std::pair<std::string, std::string> > *stringPair)
 {
 	int check = 0;
 	std::ifstream fileData;
@@ -138,7 +138,7 @@ int	fillContainerWithData(std::vector<std::pair<std::string, std::string> > *str
 	{
 		if (CheckLine(line, check, &date, &exchange_rate) == 1)
 			return 1;
-		(*stringPair).push_back(std::make_pair(date, exchange_rate));
+		(*stringPair).insert(std::make_pair(date, exchange_rate));
 		check++;
 		date = "";
 		exchange_rate = "";

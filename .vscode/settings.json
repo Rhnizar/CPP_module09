@@ -65,6 +65,9 @@
 		"utility": "cpp",
 		"vector": "cpp",
 		"numeric": "cpp",
-		"random": "cpp"
+		"random": "cpp",
+		"__tree": "cpp",
+		"set": "cpp",
+		"filesystem": "cpp"
 	}
 }

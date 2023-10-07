@@ -6,13 +6,13 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 23:06:12 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/06 19:01:20 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/07 12:40:25 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
 
-int	checkInput(std::ifstream& file, std::vector<std::pair<std::string, std::string> >& stringPair)
+int	checkInput(std::ifstream& file, std::set<std::pair<std::string, std::string> >& stringPair)
 {
 	std::string line;
 	std::string date;
@@ -98,36 +98,44 @@ int	checkInput(std::ifstream& file, std::vector<std::pair<std::string, std::stri
 			day = "";
 			continue;
 		}
-		size_t i;
-		for(i=0; i<stringPair.size(); i++)
+		size_t i = 0;
+		std::set<std::pair<std::string, std::string> >::iterator it;
+		it = stringPair.begin();
+		for(; it != stringPair.end(); it++)
 		{
-			if(strtod(stringPair.at(i).first.c_str(), NULL) == resDate)
+			if(strtod(it->first.c_str(), NULL) == resDate)
 			{
-				
-				stringPair.at(i).first.insert(4, "-");
-				stringPair.at(i).first.insert(7, "-");
-				std::cout << stringPair.at(i).first.c_str() << " => " << resValue << " = " << resValue * strtod(stringPair.at(i).second.c_str(), NULL) << std::endl;
+				std::string first = it->first;
+				first.insert(4, "-");
+				first.insert(7, "-");
+				std::cout << first.c_str() << " => " << resValue << " = " << resValue * strtod(it->second.c_str(), NULL) << std::endl;
 				break;
 			}
+			i++;
 		}
-		int tmpDate = resDate;
-		size_t	index = 0;
 		if (i == stringPair.size())
 		{
-			for(size_t i=0; i<stringPair.size(); i++)
+			int tmpDate = resDate;
+			std::set<std::pair<std::string, std::string> >::iterator it;
+			std::set<std::pair<std::string, std::string> >::iterator tmp_it;
+			it = stringPair.begin();
+			for(; it != stringPair.end(); it++)
 			{
-				double res = strtod(stringPair.at(i).first.c_str(), NULL);
+				double res = strtod(it->first.c_str(), NULL);
 				if (res < resDate && tmpDate == resDate)
+				{
 					tmpDate = res;
+					tmp_it = it;
+				}
 				if (res < resDate && res > tmpDate)
 				{
 					tmpDate = res;
-					index = i;
+					tmp_it = it;
 				}
 			}
 			date.insert(4, "-");
 			date.insert(7, "-");
-			std::cout << date.c_str() << " => " << resValue << " = " << resValue * strtod(stringPair.at(index).second.c_str(), NULL) << std::endl;
+			std::cout << date.c_str() << " => " << resValue << " = " << resValue * strtod(tmp_it->second.c_str(), NULL) << std::endl;
 		}
 		date = "";
 		value = "";
@@ -142,7 +150,7 @@ int main(int argc, char **argv)
 {
 	if(argc == 2)
 	{
-		std::vector<std::pair<std::string, std::string> > stringPair;
+		std::set<std::pair<std::string, std::string> > stringPair;
 		int re = fillContainerWithData(&stringPair);
 		if (re == 1)
 		{
