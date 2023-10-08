@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:47:54 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/08 17:09:16 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/08 18:45:15 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,6 @@
 // void	step1(std::vector<int>& container, size_t sizeVectorPair)//group the elements of pair to two
 void	step1(PmergeMe& pmergeMe, size_t sizeVectorPair)
 {
-	// if (sizeVectorPair >= pmergeMe.container.size())
-	// 	return ;
-	// std::vector<int> VectordyalXyata;
     std::vector<std::pair<std::vector<int>, std::vector<int> > > pair;
     for (size_t i = 0; i < pmergeMe.container.size(); i += sizeVectorPair * 2) 
 	{
@@ -104,58 +101,31 @@ void	step1(PmergeMe& pmergeMe, size_t sizeVectorPair)
 		std::cout << "]" << std::endl;
         // std::cout << "[" << pair.at(i).first.at(pair.at(i).first.size() -1) << ", " << pair.at(i).second.at(pair.at(i).second.size() -1) << "]" << std::endl;
     }
-	if (pair.size() == 2)
+	if (pair.size() == 1)
 		return ;
-	sizeVectorPair++;
-	step1(pmergeMe, sizeVectorPair);
-	// for(size_t i = 0; i<container.size(); i++)
-	// 	std::cout << container.at(i) << " ";
+	sizeVectorPair *= 2;
+	// std::cout << "before\n";
+	// for(size_t i=0; i<pmergeMe.container.size(); i++)
+	// 	std::cout << pmergeMe.container.at(i) << "-" ;
 	// std::cout << std::endl;
 	
-	// int last_number = -1;
-	// std::vector<std::pair<std::vector<int>, std::vector<int> > > pair;
-	// for(size_t i=0; i<container.size(); i+=sizeVectorPair + 1)
+	step1(pmergeMe, sizeVectorPair);
+	// for(size_t i=0; i<pmergeMe.container.size(); i++)
 	// {
-	// 	std::vector<int> LeftVector;
-	// 	std::vector<int> RightVector;
-	// 	for(size_t i=0; i<sizeVectorPair; i++)
-	// 		LeftVector.push_back(container.at(i));
-	// 	for(size_t i=sizeVectorPair; i<sizeVectorPair * 2; i++)
-	// 		RightVector.push_back(container.at(i));
-	// 	if (LeftVector.at(LeftVector.size() -1) > RightVector.at(RightVector.size() -1))
-	// 	{
-	// 		int tmp = LeftVector.at(LeftVector.size() -1);
-	// 		LeftVector.at(LeftVector.size() -1) = RightVector.at(RightVector.size() -1);
-	// 		RightVector.at(RightVector.size() -1) = tmp;
-	// 	}
-	// 	pair.push_back(std::make_pair(LeftVector, RightVector));
-	// }
-	
-	// if (container.size() % 2 == 1)
-	// {
-	// 	last_number = container.at(container.size() - 1);
-	// 	for(size_t i=0; i<container.size() - 1; i+=2)
-	// 	{
-	// 		LeftVector.push_back(container.at(i));
-	// 		RightVector.push_back(container.at(i + 1));
-	// 	}
-	// 	pair.push_back(std::make_pair(LeftVector, RightVector));
-	// }
-	// else
-	// {
-	// 	for(size_t i=0; i<container.size(); i+=2)
-	// 	{
-	// 		LeftVector.push_back(container.at(i));
-	// 		RightVector.push_back(container.at(i + 1));
-	// 	}
-	// 	pair.push_back(std::make_pair(LeftVector, RightVector));
-	// }
-	// for(size_t i=0; i<pair.size(); i++)
-	// 	std::cout << "[" << pair.at(i).first.at(0) << ", " << pair.at(i).second.at(0) << "]" << std::endl;
-	// if(last_number != -1)
-	// 	std::cout << "[" << last_number << "]" << std::endl;
-}
+	// 	std::vector<int> LeftVector2;
+    //     std::vector<int> RightVector2;
 
+	// 	for (size_t j = i; j < i + sizeVectorPair; j++)
+    //     	LeftVector2.push_back(pmergeMe.container.at(j));
+	
+    //     for (size_t j = i + sizeVectorPair; j < i + sizeVectorPair * 2; j++)
+    //     	RightVector2.push_back(pmergeMe.container.at(j));
+		
+	// }
+	// pmergeMe.container
+	
+}
+/*1 2 6 9 3 2 10 3 7*/
 int main(int argc, char **argv)
 {
 	if (argc > 2)
