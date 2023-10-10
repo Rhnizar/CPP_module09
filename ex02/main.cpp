@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:47:54 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/08 18:45:15 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/10 08:56:59 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	step1(PmergeMe& pmergeMe, size_t sizeVectorPair)
     }
     // empty lcontainer hna
 	pmergeMe.container.clear();
+	// fill lcontainer hna
 	for (size_t i = 0; i < pair.size(); i++)
 	{
 		for(size_t j=0; j<pair.at(i).first.size(); j++)
@@ -101,6 +102,7 @@ void	step1(PmergeMe& pmergeMe, size_t sizeVectorPair)
 		std::cout << "]" << std::endl;
         // std::cout << "[" << pair.at(i).first.at(pair.at(i).first.size() -1) << ", " << pair.at(i).second.at(pair.at(i).second.size() -1) << "]" << std::endl;
     }
+	std::cout <<"here:  " << pair.size() << std::endl;
 	if (pair.size() == 1)
 		return ;
 	sizeVectorPair *= 2;
@@ -110,6 +112,24 @@ void	step1(PmergeMe& pmergeMe, size_t sizeVectorPair)
 	// std::cout << std::endl;
 	
 	step1(pmergeMe, sizeVectorPair);
+	std::vector<std::pair<std::vector<int>, std::vector<int> > > pair2;
+	size_t i;
+	for(i=0; i<pmergeMe.container.size() / 2; i++)
+	{
+		std::vector<int> LeftVector2;
+		LeftVector2.push_back(pmergeMe.container.at(i));
+        // std::vector<int> RightVector;
+		// std::cout << pmergeMe.container.at(i) << " " ;
+		// std::cout << std::endl;
+	}
+	for(; i<pmergeMe.container.size(); i++)
+	{
+		std::vector<int> RightVector2;
+		RightVector2.push_back(pmergeMe.container.at(i));
+		// std::cout << pmergeMe.container.at(i) << " " ;
+		// std::cout << std::endl;
+	}
+	// exit(1);
 	// for(size_t i=0; i<pmergeMe.container.size(); i++)
 	// {
 	// 	std::vector<int> LeftVector2;
