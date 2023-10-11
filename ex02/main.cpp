@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:47:54 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/11 00:47:15 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/11 13:18:01 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,19 @@ void	step1(PmergeMe& pmergeMe, size_t sizeVectorPair)
         	    RightVector.push_back(pmergeMe.container.at(j));
 			
         	if (LeftVector.back() > RightVector.back())
-			{
-        	    int tmp = LeftVector.back();
-        	    LeftVector.back() = RightVector.back();
-        	    RightVector.back() = tmp;
-        	}
-        	pair.push_back(std::make_pair(LeftVector, RightVector));
+				pair.push_back(std::make_pair(RightVector, LeftVector));
+			else
+        		pair.push_back(std::make_pair(LeftVector, RightVector));
 		}
 		else
 		{
+			std::vector<int> xy;
 			for(size_t l=pmergeMe.container.size() - xyata; l<pmergeMe.container.size(); l++)
-				pmergeMe.VectordyalXyata.push_back(pmergeMe.container.at(l));
+				xy.push_back(pmergeMe.container.at(l));
+			pmergeMe.VectordyalXyata.push_back(xy);
 		}
     }
+	// exit(1);
     // empty lcontainer hna
 	pmergeMe.container.clear();
 	// fill lcontainer hna
@@ -64,7 +64,6 @@ void	step1(PmergeMe& pmergeMe, size_t sizeVectorPair)
 		for(size_t k=0; k<pair.at(i).second.size(); k++)
 			std::cout << pair.at(i).second.at(k) << " ";
 		std::cout << "]" << std::endl;
-        // std::cout << "[" << pair.at(i).first.at(pair.at(i).first.size() -1) << ", " << pair.at(i).second.at(pair.at(i).second.size() -1) << "]" << std::endl;
     }
 	sizeVectorPair *= 2;
 	
@@ -73,8 +72,6 @@ void	step1(PmergeMe& pmergeMe, size_t sizeVectorPair)
 	
 	step1(pmergeMe, sizeVectorPair);
 	pair.clear();
-	// std::cout << "sizeVectorPair: " << sizeVectorPair << std::endl;
-	// exit(1);
 	sizeVectorPair /= 2;
 	for (size_t i = 0; i < pmergeMe.container.size(); i += sizeVectorPair * 2)
 	{
@@ -88,27 +85,57 @@ void	step1(PmergeMe& pmergeMe, size_t sizeVectorPair)
         	RightVector2.push_back(pmergeMe.container.at(j));
 		pair.push_back(std::make_pair(LeftVector2, RightVector2));
 	}
-	// pmergeMe.mainChaine.reserve(pair.size());
+	//fill mainChain && Pend
+	pmergeMe.mainChaine.clear();
+	pmergeMe.pend.clear();
 	for(size_t i=0; i<pair.size();i++)
 	{
-		pmergeMe.mainChaine.push_back(pair.at(i).second);
-		pmergeMe.pend.push_back(pair.at(i).first);
+		if(i == 0)
+		{
+			pmergeMe.mainChaine.push_back(pair.at(i).first);
+			pmergeMe.mainChaine.push_back(pair.at(i).second);
+		}
+		else
+		{
+			pmergeMe.mainChaine.push_back(pair.at(i).second);
+			pmergeMe.pend.push_back(pair.at(i).first);
+		}
 
 	}
-	// exit(1);
+	if(pmergeMe.VectordyalXyata.size() > 0)
+	{
+		for(size_t i=0; i<pmergeMe.VectordyalXyata.size(); i++)
+			pmergeMe.pend.push_back(pmergeMe.VectordyalXyata.at(i));
+		pmergeMe.VectordyalXyata.clear();
+	}
+	//// empty lcontainer hna
+	pmergeMe.container.clear();
+	//fill pmergeMe.container with mainChain
+	for(size_t i=0; i<pmergeMe.mainChaine.size();i++)
+	{
+		for(size_t j=0; j<pmergeMe.mainChaine.at(i).size();j++)
+			pmergeMe.container.push_back(pmergeMe.mainChaine.at(i).at(j));
+	}
 	std::cout << "main Chain" << std::endl;
 	for(size_t i=0; i<pmergeMe.mainChaine.size();i++)
 	{
 		for(size_t j=0; j<pmergeMe.mainChaine.at(i).size();j++)
 			std::cout << pmergeMe.mainChaine.at(i).at(j) << " ";
+		std::cout << " | ";
 	}
 	std::cout << "\npend" << std::endl;
 	for(size_t i=0; i<pmergeMe.pend.size();i++)
 	{
 		for(size_t j=0; j<pmergeMe.pend.at(i).size();j++)
 			std::cout << pmergeMe.pend.at(i).at(j) << " ";
+		std::cout << " | ";
 	}
 	std::cout << std::endl;
+	//print container dyal xyata
+	// std::cout << "\nxyata" << std::endl;
+	// for(size_t i=0; i<pmergeMe.VectordyalXyata.size(); i++)
+	// 	std::cout << pmergeMe.VectordyalXyata.at(i) << " ";
+	// std::cout << std::endl;
 	exit(1);
 	// empty lcontainer hna
 	// pmergeMe.container.clear();
