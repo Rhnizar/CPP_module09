@@ -6,11 +6,16 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:47:54 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/11 13:18:01 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/11 22:14:25 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
+
+bool CompareLowerBound(const std::vector<int>& cmp1, const std::vector<int>& cmp2) 
+{
+    return cmp1.back() <= cmp2.back();
+}
 
 void	step1(PmergeMe& pmergeMe, size_t sizeVectorPair)
 {
@@ -54,17 +59,17 @@ void	step1(PmergeMe& pmergeMe, size_t sizeVectorPair)
 		for(size_t k=0; k<pair.at(i).second.size(); k++)
 			pmergeMe.container.push_back(pair.at(i).second.at(k));
 	}
-    for (size_t i = 0; i < pair.size(); i++) 
-	{
-        // Access elements within each pair
-		std::cout << "[";
-		for(size_t j=0; j<pair.at(i).first.size(); j++)
-			std::cout << pair.at(i).first.at(j) << " ";
-		std::cout << ",";
-		for(size_t k=0; k<pair.at(i).second.size(); k++)
-			std::cout << pair.at(i).second.at(k) << " ";
-		std::cout << "]" << std::endl;
-    }
+    // for (size_t i = 0; i < pair.size(); i++) 
+	// {
+    //     // Access elements within each pair
+	// 	std::cout << "[";
+	// 	for(size_t j=0; j<pair.at(i).first.size(); j++)
+	// 		std::cout << pair.at(i).first.at(j) << " ";
+	// 	std::cout << ",";
+	// 	for(size_t k=0; k<pair.at(i).second.size(); k++)
+	// 		std::cout << pair.at(i).second.at(k) << " ";
+	// 	std::cout << "]" << std::endl;
+    // }
 	sizeVectorPair *= 2;
 	
 	if (pair.size() == 1)
@@ -104,17 +109,16 @@ void	step1(PmergeMe& pmergeMe, size_t sizeVectorPair)
 	}
 	if(pmergeMe.VectordyalXyata.size() > 0)
 	{
+		// pmergeMe.pend.reserve(pmergeMe.pend.size() + pmergeMe.VectordyalXyata.size());
 		for(size_t i=0; i<pmergeMe.VectordyalXyata.size(); i++)
 			pmergeMe.pend.push_back(pmergeMe.VectordyalXyata.at(i));
 		pmergeMe.VectordyalXyata.clear();
 	}
-	//// empty lcontainer hna
-	pmergeMe.container.clear();
-	//fill pmergeMe.container with mainChain
-	for(size_t i=0; i<pmergeMe.mainChaine.size();i++)
+	//using here lower_bound
+	for(size_t i=0; i<pmergeMe.pend.size();i++)
 	{
-		for(size_t j=0; j<pmergeMe.mainChaine.at(i).size();j++)
-			pmergeMe.container.push_back(pmergeMe.mainChaine.at(i).at(j));
+		std::vector<std::vector<int> >::iterator it = std::lower_bound(pmergeMe.mainChaine.begin(), pmergeMe.mainChaine.end(), pmergeMe.pend.at(i), CompareLowerBound);
+		pmergeMe.mainChaine.insert(it, pmergeMe.pend.at(i));
 	}
 	std::cout << "main Chain" << std::endl;
 	for(size_t i=0; i<pmergeMe.mainChaine.size();i++)
@@ -131,26 +135,16 @@ void	step1(PmergeMe& pmergeMe, size_t sizeVectorPair)
 		std::cout << " | ";
 	}
 	std::cout << std::endl;
-	//print container dyal xyata
-	// std::cout << "\nxyata" << std::endl;
-	// for(size_t i=0; i<pmergeMe.VectordyalXyata.size(); i++)
-	// 	std::cout << pmergeMe.VectordyalXyata.at(i) << " ";
-	// std::cout << std::endl;
-	exit(1);
-	// empty lcontainer hna
-	// pmergeMe.container.clear();
-	// // fill lcontainer hna
-	// for (size_t i = 0; i < pair.size(); i++)
-	// {
-	// 	for(size_t j=0; j<pair.at(i).first.size(); j++)
-	// 		pmergeMe.container.push_back(pair.at(i).first.at(j));
-	// 	for(size_t k=0; k<pair.at(i).second.size(); k++)
-	// 		pmergeMe.container.push_back(pair.at(i).second.at(k));
-	// }
-	// for(size_t r=0; r<pmergeMe.container.size(); r++)
-	// 	std::cout << pmergeMe.container.at(r) << " ";
-	// std::cout << std::endl;
-	// std::cout << "size: " << pair.size() << std::endl;
+	//// empty lcontainer hna
+	pmergeMe.container.clear();
+	//fill pmergeMe.container with mainChain
+	for(size_t i=0; i<pmergeMe.mainChaine.size();i++)
+	{
+		for(size_t j=0; j<pmergeMe.mainChaine.at(i).size();j++)
+			pmergeMe.container.push_back(pmergeMe.mainChaine.at(i).at(j));
+	}
+	// exit(1);
+
 }
 /*1 2 6 9 3 2 10 3 7*/
 int main(int argc, char **argv)
@@ -176,10 +170,10 @@ int main(int argc, char **argv)
 		step1(pmergeMe, 1);
 		
 		// print container after recursion
-		// std::cout << "container after recursion :" << std::endl;
-		// for(size_t i=0; i<pmergeMe.container.size(); i++)
-		// 	std::cout << pmergeMe.container.at(i) << " " ;
-		// std::cout << std::endl;
+		std::cout << "container after recursion :" << std::endl;
+		for(size_t i=0; i<pmergeMe.container.size(); i++)
+			std::cout << pmergeMe.container.at(i) << " " ;
+		std::cout << std::endl;
 		// std::cout << "container dyal xyata after recursion :" << std::endl;
 		// for(size_t i=0; i<pmergeMe.VectordyalXyata.size(); i++)
 		// 	std::cout << pmergeMe.VectordyalXyata.at(i) << " " ;
