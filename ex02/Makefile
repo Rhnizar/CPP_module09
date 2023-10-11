@@ -6,7 +6,7 @@
 #    By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/01 15:41:24 by rrhnizar          #+#    #+#              #
-#    Updated: 2023/10/11 22:14:08 by rrhnizar         ###   ########.fr        #
+#    Updated: 2023/10/11 23:50:42 by rrhnizar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ OBJ = $(SRC:.cpp=.o)
 
 CXX = c++
 
-RFLAG = ${CXX} -Wall -Werror -Wextra -std=c++98
+RFLAG = ${CXX} -Wall -Werror -Wextra -std=c++98 -fsanitize=address
 
 %.o : %.cpp
 	${RFLAG} -c $< -o $@
