@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:48:15 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/11 22:57:51 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/12 11:08:51 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ class PmergeMe
 {
 	public:
 		std::vector<int> container;
-		std::vector<int> container2;
 		int i;
 		// std::vector<int> VectordyalXyata;
 		std::vector<std::vector<int> > VectordyalXyata;
