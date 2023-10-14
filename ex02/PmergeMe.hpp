@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:48:15 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/14 20:06:32 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/14 20:50:21 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ class PmergeMe
 		std::vector<std::vector<int> > mainChaine;
 		std::vector<std::vector<int> > pend;
 		std::vector<std::pair<std::vector<int>, std::vector<int> > > pairR;
-
+		std::vector<std::pair<std::vector<int>, std::vector<int> > > pair;
 		
 		int		numElements;
 		void	printBefore();

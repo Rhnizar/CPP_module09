@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:47:54 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/14 20:09:02 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/14 20:52:20 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	PmergeMe::ReverseRecursion(size_t sizeVectorPair)
 		}
 		pairR.push_back(std::make_pair(LeftVector2, RightVector2));
 	}
-
 	// fill mainChaine && Pend
 	mainChaine.clear();
 	for(size_t i=0; i<pairR.size();i++)
@@ -87,7 +86,7 @@ void	PmergeMe::ReverseRecursion(size_t sizeVectorPair)
 		mainChaine.insert(it, pend.at(i));
 	}
 	
-	// //// empty lcontainer hna
+	//  empty lcontainer hna
 	container.clear();
 	pend.clear();
 	//fill pmergeMe.container with mainChain
@@ -108,7 +107,7 @@ void	PmergeMe::ReverseRecursion(size_t sizeVectorPair)
 
 void	PmergeMe::MergeInsertSort(size_t sizeVectorPair)
 {
-    std::vector<std::pair<std::vector<int>, std::vector<int> > > pair;
+	pair.clear();
 	int xyata = container.size() % (sizeVectorPair * 2);
 
     for (size_t i = 0; i < container.size(); i += sizeVectorPair * 2) 
