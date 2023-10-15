@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:48:15 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/14 20:50:21 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/14 22:42:24 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <cstdlib> // Include the <cstdlib> for strtod
 #include <vector>
 #include <unistd.h>
+#include <ctime>
 
 
 class PmergeMe
