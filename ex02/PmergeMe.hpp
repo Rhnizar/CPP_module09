@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:48:15 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/15 20:49:20 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/16 21:53:05 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ class PmergeMe
 		std::vector<std::vector<int> > pend;
 		std::vector<std::pair<std::vector<int>, std::vector<int> > > pairR;
 		std::vector<std::pair<std::vector<int>, std::vector<int> > > pair;
+
+		std::vector<std::vector<std::vector<int> >::iterator> Vecit;
 		
 		int		numElements;
 		void	printBefore();

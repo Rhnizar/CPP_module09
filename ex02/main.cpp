@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:47:54 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/16 15:26:02 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/16 22:46:25 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	PmergeMe::LastRecursion()
 	}
 }
 
+
 void	PmergeMe::ReverseRecursion(size_t sizeVectorPair)
 {
 	pairR.clear();
@@ -59,20 +60,7 @@ void	PmergeMe::ReverseRecursion(size_t sizeVectorPair)
 		}
 		pairR.push_back(std::make_pair(LeftVector2, RightVector2));
 	}
-	// std::cout << "Reverse recursion\n";
-	// for (size_t i = 0; i < pair.size(); i++) 
-	// 	{
-    // 	    // Access elements within each pair
-	// 		std::cout << "[";
-	// 		for(size_t j=0; j<pair.at(i).first.size(); j++)
-	// 			std::cout << pair.at(i).first.at(j) << " ";
-	// 		std::cout << ",";
-	// 		for(size_t k=0; k<pair.at(i).second.size(); k++)
-	// 			std::cout << pair.at(i).second.at(k) << " ";
-	// 		std::cout << "]" << std::endl;
-    // 	}
-	// 	std::cout << std::endl;
-	// fill mainChaine && Pend
+	
 	mainChaine.clear();
 	for(size_t i=0; i<pairR.size();i++)
 	{
@@ -93,9 +81,25 @@ void	PmergeMe::ReverseRecursion(size_t sizeVectorPair)
 			pend.push_back(VectordyalXyata.at(i));
 		VectordyalXyata.clear();
 	}
+	//fill container with iterators 
+	Vecit.clear();
+	std::vector<std::vector<int> >::iterator ite;
+	for(ite = mainChaine.begin(); ite != mainChaine.end(); ite++)
+	{
+		Vecit.push_back(ite);
+	}
+	//check mainChaine container
+	// for(size_t i=0; i<Vecit.size(); i++)
+	// {
+	// 	std::vector<int> &tmpVec = *(Vecit.at(i));
+	// 	for(size_t i=0; i<tmpVec.size(); i++)
+	// 		std::cout << tmpVec.at(i) << " ";
+	// 	std::cout << "\n-----------------  -------------------\n";
+	// }
+	// std::cout << std::endl;
+	// exit(1);
 	// generateJacobIndex();
 	
-	//using here lower_bound
 	for(size_t i=2; i<pend.size(); i++)
 	{
 		int jac = jacobsthal(i);
@@ -107,69 +111,38 @@ void	PmergeMe::ReverseRecursion(size_t sizeVectorPair)
 		else
 			jacobSequence.push_back(jacobsthal(i));
 	}
-	// int len = pend.size() - 1;
-	// while (len-- >= 3)
-	// 	jacobSequence.push_back(jacobsthal(len));
-	// printf("here\n");
-	// std::cout << "Jacob Sequence " << std::endl;
-	// for(size_t i=0; i<jacobSequence.size(); i++)
-	// 	std::cout << jacobSequence.at(i) << " ";
-	// 	// std::cout << jacobSequence.at(jacobSequence.size() - 1) << " ";
-		
-	// std::cout << std::endl;
-	// exit(1);
+	//using here lower_bound
 	int begin = 0;
-	// for(size_t i=0; i < pend.size(); i++)
-	// {
-		// this is jacpsthal mazal makhdamaxe
-		// std::cout << "size pend:  " << pend.size() << std::endl;
-		if(jacobSequence.size() == 0)
+	for(size_t i=0; i<jacobSequence.size(); i++)
+	{
+		int j = jacobSequence.at(i) - 1;
+		int tmp = j + 1;
+		while(j >= begin)
 		{
-			for(size_t i=0; i<pend.size(); i++)
+			if(j >= (int)pend.size())
+				j = pend.size() - 1;
+			int tmpJ = j;
+			std::vector<std::vector<int> >::iterator it;
+			for(size_t i=tmpJ; i<Vecit.size(); i++)
 			{
-				std::vector<std::vector<int> >::iterator it;
-				it = std::lower_bound(mainChaine.begin(), mainChaine.end(), pend.at(i), CompareLowerBound);
-				// std::cout << "==>  " << pend.at(j).back() << std::endl;
-				mainChaine.insert(it, pend.at(i));
-				pend.erase(pend.begin() + i);
+				Vecit.at(i)++;
 			}
+			it = std::lower_bound(mainChaine.begin(), Vecit.at(tmpJ) , pend.at(j), CompareLowerBound);
+			// it = std::lower_bound(mainChaine.begin(), mainChaine.end(), pend.at(j), CompareLowerBound);
+		
+			mainChaine.insert(it, pend.at(j));
+			pend.erase(pend.begin() + j);
+			j--;
 		}
-		else
-		{
-			for(size_t i=0; i<jacobSequence.size(); i++)
-			{
-				int j = jacobSequence.at(i) - 1;
-				int tmp = j + 1;
-				// for(; j>=begin; j--)
-				// std::cout << "begin -->  " << i << std::endl;
-				while(j >= begin)
-				{
-					// std::cout << "\njjjjj -->  " << j << std::endl;
-					// std::cout << "begin -->  " << begin << std::endl;
-					// int tmpJ = j;
-					if(j >= (int)pend.size())
-						j = pend.size() - 1;
-					std::vector<std::vector<int> >::iterator it;
-					it = std::lower_bound(mainChaine.begin(), mainChaine.end(), pend.at(j), CompareLowerBound);
-					// std::cout << "==>  " << pend.at(j).back() << std::endl;
-					mainChaine.insert(it, pend.at(j));
-					pend.erase(pend.begin() + j);
-					j--;
-					// if(tmpJ == j)
-					// 	j--;
-				}
-				
-				// std::cout << "\n------ break here ------------\n";
-				begin = tmp;
-			}
-		}
-		// std::cout << "\n---------------------------------\n";
-		// exit(1);
-	// 	std::vector<std::vector<int> >::iterator it;
-	// 		it = std::lower_bound(mainChaine.begin(), mainChaine.end(), pend.at(i), CompareLowerBound);
-	// 		mainChaine.insert(it, pend.at(i));
-			
-	// }
+		begin = tmp;
+	}
+	for(size_t i=0; i<pend.size(); i++)
+	{
+		std::vector<std::vector<int> >::iterator it;
+		it = std::lower_bound(mainChaine.begin(), mainChaine.end(), pend.at(i), CompareLowerBound);
+		mainChaine.insert(it, pend.at(i));
+	}
+	pend.clear();
 	
 	//  empty lcontainer hna
 	container.clear();
