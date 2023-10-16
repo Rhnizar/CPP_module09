@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:48:15 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/14 22:42:24 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/15 20:49:20 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <vector>
 #include <unistd.h>
 #include <ctime>
+#include <cmath>
+#include <list>
 
 
 class PmergeMe
@@ -35,9 +37,23 @@ class PmergeMe
 		void	MergeInsertSort(size_t sizeVectorPair);
 		void	LastRecursion();
 		void	ReverseRecursion(size_t sizeVectorPair);
+		/*jacobsthal*/
+		// void	generateJacobIndex();
+		int		jacobsthal(size_t index);
+		std::vector<int> jacobSequence;
 		PmergeMe(){}
 		~PmergeMe(){}
 
+		/*list*/
+
+		std::list<int> containerList;
+		std::list<std::list<int> > listdyalXyata;
+		std::list<std::list<int> > mainChaineList;
+		std::list<std::list<int> > pendList;
+		std::list<std::pair<std::list<int>, std::list<int> > > LpairR;
+		std::list<std::pair<std::vector<int>, std::vector<int> > > Lpair;
+		
+		void	usingList(size_t sizeListPair);
 };
 
 int	isInteger(std::string str);

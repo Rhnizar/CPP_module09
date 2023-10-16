@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:48:27 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/14 19:42:58 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/15 21:51:11 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	PmergeMe::fillContainer(char **argv)
 	while (argv[i])
 	{
 		container.push_back(strtod(argv[i], NULL));
+		containerList.push_back(strtod(argv[i], NULL));
 		i++;
 	}
 	return 0;
@@ -66,3 +67,32 @@ void	PmergeMe::printAfter()
 	}
 	std::cout << std::endl << std::endl;
 }
+
+/*jacobsthal*/
+
+int		PmergeMe::jacobsthal(size_t n)
+{
+	// if (n == 0)
+	// 	return (0);
+	// if (n == 1)
+	// 	return (1);
+	return ((pow(2, n +1) + pow(-1, n)) / 3);
+	// return (jacobsthal(n - 1) + 2 * jacobsthal(n - 2));
+}
+
+
+// void	PmergeMe::generateJacobIndex()
+// {
+// 	size_t size;
+// 	size_t jcobstalIndex;
+// 	int index;
+
+// 	size = pend.size();
+// 	index = 3;
+
+// 	while ((jcobstalIndex = jacobsthal(index)) < size - 1)
+// 	{
+// 		jacobSequence.push_back(jcobstalIndex);
+// 		index++;
+// 	}
+// }

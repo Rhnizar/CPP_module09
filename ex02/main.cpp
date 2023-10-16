@@ -6,14 +6,16 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:47:54 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/15 08:48:12 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/16 15:26:02 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 
+static int comp = 0;
 bool CompareLowerBound(const std::vector<int>& cmp1, const std::vector<int>& cmp2) 
 {
+	comp++;
     return cmp1.back() <= cmp2.back();
 }
 
@@ -37,6 +39,7 @@ void	PmergeMe::LastRecursion()
 void	PmergeMe::ReverseRecursion(size_t sizeVectorPair)
 {
 	pairR.clear();
+	jacobSequence.clear();
 	sizeVectorPair /= 2;
 	for (size_t i = 0; i < container.size(); i += sizeVectorPair * 2)
 	{
@@ -56,6 +59,19 @@ void	PmergeMe::ReverseRecursion(size_t sizeVectorPair)
 		}
 		pairR.push_back(std::make_pair(LeftVector2, RightVector2));
 	}
+	// std::cout << "Reverse recursion\n";
+	// for (size_t i = 0; i < pair.size(); i++) 
+	// 	{
+    // 	    // Access elements within each pair
+	// 		std::cout << "[";
+	// 		for(size_t j=0; j<pair.at(i).first.size(); j++)
+	// 			std::cout << pair.at(i).first.at(j) << " ";
+	// 		std::cout << ",";
+	// 		for(size_t k=0; k<pair.at(i).second.size(); k++)
+	// 			std::cout << pair.at(i).second.at(k) << " ";
+	// 		std::cout << "]" << std::endl;
+    // 	}
+	// 	std::cout << std::endl;
 	// fill mainChaine && Pend
 	mainChaine.clear();
 	for(size_t i=0; i<pairR.size();i++)
@@ -77,18 +93,87 @@ void	PmergeMe::ReverseRecursion(size_t sizeVectorPair)
 			pend.push_back(VectordyalXyata.at(i));
 		VectordyalXyata.clear();
 	}
+	// generateJacobIndex();
+	
 	//using here lower_bound
-	size_t len = pend.size();
-	for(size_t i=0; i<len; i++)
+	for(size_t i=2; i<pend.size(); i++)
 	{
-		std::vector<std::vector<int> >::iterator it;
-		it = std::lower_bound(mainChaine.begin(), mainChaine.end(), pend.at(i), CompareLowerBound);
-		mainChaine.insert(it, pend.at(i));
+		int jac = jacobsthal(i);
+		if(jac >= static_cast<int>(pend.size()))
+		{
+			jacobSequence.push_back(pend.size() - 1);
+			break;
+		}
+		else
+			jacobSequence.push_back(jacobsthal(i));
 	}
+	// int len = pend.size() - 1;
+	// while (len-- >= 3)
+	// 	jacobSequence.push_back(jacobsthal(len));
+	// printf("here\n");
+	// std::cout << "Jacob Sequence " << std::endl;
+	// for(size_t i=0; i<jacobSequence.size(); i++)
+	// 	std::cout << jacobSequence.at(i) << " ";
+	// 	// std::cout << jacobSequence.at(jacobSequence.size() - 1) << " ";
+		
+	// std::cout << std::endl;
+	// exit(1);
+	int begin = 0;
+	// for(size_t i=0; i < pend.size(); i++)
+	// {
+		// this is jacpsthal mazal makhdamaxe
+		// std::cout << "size pend:  " << pend.size() << std::endl;
+		if(jacobSequence.size() == 0)
+		{
+			for(size_t i=0; i<pend.size(); i++)
+			{
+				std::vector<std::vector<int> >::iterator it;
+				it = std::lower_bound(mainChaine.begin(), mainChaine.end(), pend.at(i), CompareLowerBound);
+				// std::cout << "==>  " << pend.at(j).back() << std::endl;
+				mainChaine.insert(it, pend.at(i));
+				pend.erase(pend.begin() + i);
+			}
+		}
+		else
+		{
+			for(size_t i=0; i<jacobSequence.size(); i++)
+			{
+				int j = jacobSequence.at(i) - 1;
+				int tmp = j + 1;
+				// for(; j>=begin; j--)
+				// std::cout << "begin -->  " << i << std::endl;
+				while(j >= begin)
+				{
+					// std::cout << "\njjjjj -->  " << j << std::endl;
+					// std::cout << "begin -->  " << begin << std::endl;
+					// int tmpJ = j;
+					if(j >= (int)pend.size())
+						j = pend.size() - 1;
+					std::vector<std::vector<int> >::iterator it;
+					it = std::lower_bound(mainChaine.begin(), mainChaine.end(), pend.at(j), CompareLowerBound);
+					// std::cout << "==>  " << pend.at(j).back() << std::endl;
+					mainChaine.insert(it, pend.at(j));
+					pend.erase(pend.begin() + j);
+					j--;
+					// if(tmpJ == j)
+					// 	j--;
+				}
+				
+				// std::cout << "\n------ break here ------------\n";
+				begin = tmp;
+			}
+		}
+		// std::cout << "\n---------------------------------\n";
+		// exit(1);
+	// 	std::vector<std::vector<int> >::iterator it;
+	// 		it = std::lower_bound(mainChaine.begin(), mainChaine.end(), pend.at(i), CompareLowerBound);
+	// 		mainChaine.insert(it, pend.at(i));
+			
+	// }
 	
 	//  empty lcontainer hna
 	container.clear();
-	pend.clear();
+	// pend.clear();
 	//fill pmergeMe.container with mainChain
 	for(size_t i=0; i<mainChaine.size();i++)
 	{
@@ -125,7 +210,10 @@ void	PmergeMe::MergeInsertSort(size_t sizeVectorPair)
 
 			
         	if (LeftVector.back() > RightVector.back())
+			{
+				comp++;
 				pair.push_back(std::make_pair(RightVector, LeftVector));
+			}
 			else
         		pair.push_back(std::make_pair(LeftVector, RightVector));
 		}
@@ -151,33 +239,32 @@ void	PmergeMe::MergeInsertSort(size_t sizeVectorPair)
 		for(size_t k=0; k<pair.at(i).second.size(); k++)
 			container.push_back(pair.at(i).second.at(k));
 	}
-	
 	sizeVectorPair *= 2;
-	// for (size_t i = 0; i < pair.size(); i++) 
-	// {
-    //     // Access elements within each pair
-	// 	std::cout << "[";
-	// 	for(size_t j=0; j<pair.at(i).first.size(); j++)
-	// 		std::cout << pair.at(i).first.at(j) << " ";
-	// 	std::cout << ",";
-	// 	for(size_t k=0; k<pair.at(i).second.size(); k++)
-	// 		std::cout << pair.at(i).second.at(k) << " ";
-	// 	std::cout << "]" << std::endl;
-    // }
-	// std::cout << "xyta \n";
-	// for (size_t i = 0; i < VectordyalXyata.size(); i++) 
-	// {
-	// 	for (size_t j = 0; j < VectordyalXyata.at(i).size(); j++)
-	// 		std::cout << VectordyalXyata.at(i).at(j) << " " ;
-	// }
-	// std::cout << std::endl;
-	
 	if (pair.size() <= 1)
 	{
+		// std::cout << "in last recursion \n";
+		// for (size_t i = 0; i < pair.size(); i++) 
+		// {
+    	//     // Access elements within each pair
+		// 	std::cout << "[";
+		// 	for(size_t j=0; j<pair.at(i).first.size(); j++)
+		// 		std::cout << pair.at(i).first.at(j) << " ";
+		// 	std::cout << ",";
+		// 	for(size_t k=0; k<pair.at(i).second.size(); k++)
+		// 		std::cout << pair.at(i).second.at(k) << " ";
+		// 	std::cout << "]" << std::endl;
+    	// }
+		// std::cout << "xyta \n";
+		// for (size_t i = 0; i < VectordyalXyata.size(); i++) 
+		// {
+		// 	for (size_t j = 0; j < VectordyalXyata.at(i).size(); j++)
+		// 		std::cout << VectordyalXyata.at(i).at(j) << " " ;
+		// }
+		// std::cout << std::endl;
+		// exit(1);
 		LastRecursion();
 		return;
 	}
-	
 	MergeInsertSort(sizeVectorPair);
 	ReverseRecursion(sizeVectorPair);
 }
@@ -190,11 +277,82 @@ void	usingVector(PmergeMe& pmergeMe)
 	pmergeMe.printAfter();
 }
 
+// void	usingList(PmergeMe& pmergeMe)
+// {
+// 	std::list<int>::iterator it;
+// 	for(it =pmergeMe.containerList.begin(); it!=pmergeMe.containerList.end(); ++it)
+// 	{
+// 		std::cout << *it << " ";
+// 	}
+// 	std::cout << std::endl;
+// }
+
+// void	PmergeMe::usingList(size_t sizeListPair)
+// {
+// 	Lpair.clear();
+// 	int xyata = containerList.size() % (sizeListPair * 2);
+
+//     for (size_t i = 0; i < containerList.size(); i += sizeListPair * 2) 
+// 	{
+//         std::list<int> LeftVector;
+//         std::list<int> RightVector;
+	
+// 		if(i != containerList.size() - xyata)
+// 		{
+//         	// for (size_t j = i; j < i + sizeListPair; j++)
+// 			std::list<int>::iterator it;
+// 			for (it = containerList.begin(); it != it + sizeListPair; ++it)
+//         	    LeftVector.push_back(*it);
+	
+//         	for (; it != containerList.end(); ++it)
+//         	    RightVector.push_back(*it);
+
+//         	if (LeftVector.back() > RightVector.back())
+// 			{
+// 				comp++;
+// 				Lpair.push_back(std::make_pair(RightVector, LeftVector));
+// 			}
+// 			else
+//         		Lpair.push_back(std::make_pair(LeftVector, RightVector));
+// 		}
+// 		else
+// 		{
+// 			std::vector<int> xy;
+// 			for(size_t l=containerList.size() - xyata; l<containerList.size(); l++)
+// 			{
+// 				xy.push_back(containerList.at(l));
+// 				listdyalXyata.push_back(xy);
+// 				xy.clear();
+// 			}
+// 		}
+//     }
+	
+//     // empty lcontainerList hna
+// 	containerList.clear();
+// 	// fill lcontainerList hna
+// 	for (size_t i = 0; i < Lpair.size(); i++)
+// 	{
+// 		for(size_t j=0; j<Lpair.at(i).first.size(); j++)
+// 			containerList.push_back(Lpair.at(i).first.at(j));
+// 		for(size_t k=0; k<Lpair.at(i).second.size(); k++)
+// 			containerList.push_back(Lpair.at(i).second.at(k));
+// 	}
+// 	sizeListPair *= 2;
+// 	if (Lpair.size() <= 1)
+// 	{
+// 		// LastRecursion();
+// 		return;
+// 	}
+// 	usingList(sizeListPair);
+// 	// ReverseRecursion(sizeListPair);
+// }
+
 int main(int argc, char **argv)
 {
 	if (argc >= 2)
 	{
-		// clock_t timeVec;
+		clock_t timeVec;
+		clock_t timeList;
 		try
 		{
 			PmergeMe pmergeMe;
@@ -203,10 +361,15 @@ int main(int argc, char **argv)
 				std::cout << "Error" << std::endl;
 				return 0;
 			}
-			// timeVec = clock();
+			timeVec = clock();
 			usingVector(pmergeMe);
-			// timeVec = clock() - timeVec;
-			
+			timeVec = clock() - timeVec;
+			timeList = clock();
+			// usingList(pmergeMe);
+			timeList = clock() - timeList;
+			//millesecond
+			std::cout << "Time to process a range of " << argc - 1 << " elements with std::vector : " << static_cast<float>(timeVec) * 1000 / CLOCKS_PER_SEC << " us" << std::endl;
+			std::cout << "Time to process a range of " << argc - 1 << " elements with std::list   : " << static_cast<float>(timeList) * 1000 / CLOCKS_PER_SEC << " us" << std::endl;
 		}
 		catch(const std::exception& e)	
 		{
@@ -215,5 +378,18 @@ int main(int argc, char **argv)
 	}
 	else
 		std::cout << "Usage: " <<  argv[0] << "  <numbers ...>   " << std::endl;
+
+	std::cout << "===>   " << comp << std::endl;
 	return 0;
 }
+
+
+//11 6 3 66 28 80 65 42 71 88 67 33 5 58 28 78 94 43 18 95 80 
+
+
+
+
+
+            //   94 94 94 94 95
+
+            // 5 58  78 94 43 18 95 
