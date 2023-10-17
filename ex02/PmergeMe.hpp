@@ -17,6 +17,7 @@
 #include <ctime>
 #include <cmath>
 #include <list>
+#include <algorithm>
 
 
 class PmergeMe
