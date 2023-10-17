@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:47:54 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/16 22:46:25 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/17 08:47:56 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	PmergeMe::ReverseRecursion(size_t sizeVectorPair)
 		Vecit.push_back(ite);
 	}
 	//check mainChaine container
+	// std::cout << "\n vector iterators\n";
 	// for(size_t i=0; i<Vecit.size(); i++)
 	// {
 	// 	std::vector<int> &tmpVec = *(Vecit.at(i));
