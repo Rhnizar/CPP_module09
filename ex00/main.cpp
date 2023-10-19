@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 23:06:12 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/07 12:40:25 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/19 15:04:47 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,13 @@ int	checkInput(std::ifstream& file, std::set<std::pair<std::string, std::string>
 		}
 		double resValue = strtod(value.c_str(), NULL);
 		double resDate = strtod(date.c_str(), NULL);
+		if (resValue > 1000 && resValue < 2147483648)
+		{
+			std::cout << "Error: bad input => " << line << std::endl;
+			date = "";
+			value = "";
+			continue;
+		}
 		if (resValue > 2147483647)
 		{
 			std::cerr << "Error: too large a number." << std::endl;

@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:47:54 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/18 17:23:01 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/19 14:00:57 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 static int comp = 0;
 bool CompareLowerBound(const std::vector<int>& cmp1, const std::vector<int>& cmp2) 
+{
+	comp++;
+    return cmp1.back() <= cmp2.back();
+}
+bool CompareLowerBound_List(const std::list<int>& cmp1, const std::list<int>& cmp2) 
 {
 	comp++;
     return cmp1.back() <= cmp2.back();
@@ -150,10 +155,10 @@ void	PmergeMe::MergeInsertSort(size_t sizeVectorPair)
         	for (size_t j = i + sizeVectorPair; j < i + sizeVectorPair * 2; j++)
         	    RightVector.push_back(container.at(j));
 
-			
+			comp++;
         	if (LeftVector.back() > RightVector.back())
 			{
-				comp++;
+				
 				pair.push_back(std::make_pair(RightVector, LeftVector));
 			}
 			else
@@ -184,6 +189,200 @@ void	PmergeMe::MergeInsertSort(size_t sizeVectorPair)
 	MergeInsertSort(sizeVectorPair);
 	ReverseRecursion(sizeVectorPair, VectordyalXyata, mainChaine, pend);
 }
+
+/* here using list in function MergeInsertSort*/
+
+void PmergeMe::MergeInsertSort_For_List(size_t sizeListPair)
+{
+    Lpair.clear();
+    int xyata = ListContainer.size() % (sizeListPair * 2);
+    std::list<int> ListDyalXyata;
+    std::list<std::list<int> > mainChaine;
+    std::list<std::list<int> > pend;
+
+	std::list<int>::iterator ListIter = ListContainer.begin();
+	std::advance(ListIter, ListContainer.size() - xyata);
+	
+    for (std::list<int>::iterator it = ListContainer.begin(); it != ListContainer.end(); std::advance(it, sizeListPair * 2))
+    {
+        std::list<int> LeftList;
+        std::list<int> RightList;
+        // if (std::distance(it, ListContainer.end()) >= sizeListPair * 2)
+		if(it != ListIter)
+        {
+            for (size_t j = 0; j < sizeListPair; j++)
+            {
+                LeftList.push_back(*it);
+                std::advance(it, 1);
+            }
+
+            for (size_t j = 0; j < sizeListPair; j++)
+            {
+                RightList.push_back(*it);
+                std::advance(it, 1);
+            }
+
+            if (LeftList.back() > RightList.back())
+            {
+                comp++;
+                Lpair.push_back(std::make_pair(RightList, LeftList));
+            }
+            else
+                Lpair.push_back(std::make_pair(LeftList, RightList));
+        }
+        else
+        {
+            for (; it != ListContainer.end(); ++it)
+                ListDyalXyata.push_back(*it);
+        }
+    }
+
+    // Empty the list ListContainer
+    ListContainer.clear();
+
+    // Fill the list ListContainer
+	std::list<std::pair<std::list<int>, std::list<int> > >::iterator ite;
+	for (ite = Lpair.begin(); ite != Lpair.end(); ite++)
+	{
+    	const std::list<int>& first = ite->first;
+    	const std::list<int>& second = ite->second;
+    	ListContainer.insert(ListContainer.end(), first.begin(), first.end());
+    	ListContainer.insert(ListContainer.end(), second.begin(), second.end());
+	}
+
+
+    sizeListPair *= 2;
+
+    if (Lpair.size() <= 1)
+    {
+        // LastRecursion_For_List(sizeListPair, ListDyalXyata, mainChaine);
+        return;
+    }
+
+    MergeInsertSort_For_List(sizeListPair);
+    // ReverseRecursion_For_List(sizeListrPair, ListDyalXyata, mainChaine, pend);
+}
+
+/* here using last recursion for list*/
+
+void	PmergeMe::LastRecursion_For_List(size_t sizeListPair,  std::list<int>& ListDyalXyata, std::list<std::list<int> >& mainChaine)
+{
+	std::list<int> tmp;
+	sizeListPair /= 2;
+	std::list<int>::iterator DistanceIter;
+    for (std::list<int>::iterator it = ListContainer.begin(); it != ListContainer.end(); std::advance(it, sizeListPair * 2))
+    {
+		DistanceIter = it;
+		std::advance(DistanceIter, sizeListPair);
+		while(it != DistanceIter)
+		{
+			tmp.push_back(*it);
+			it++;
+		}
+		mainChaine.push_back(tmp);
+		tmp.clear();
+	}
+	if(ListDyalXyata.size() > 0)
+	{
+		std::list<std::list<int> >::iterator listit;
+		listit = std::lower_bound(mainChaine.begin(), mainChaine.end(), ListDyalXyata, CompareLowerBound_List);
+		mainChaine.insert(listit, ListDyalXyata);
+	}
+	ListContainer.clear();
+	std::list<std::list<int> >::iterator mainIte;
+	for(mainIte = mainChaine.begin(); mainIte != mainChaine.end();mainIte++)
+	{
+		const std::list<int>& ListTmp = *mainIte;
+		ListContainer.insert(ListContainer.end(), ListTmp.begin(), ListTmp.end());
+	}
+}
+
+// /* here using Reverse recursion for list*/
+void PmergeMe::ReverseRecursion_For_List(size_t sizeListPair, std::list<int>& ListDyalXyata, std::list<std::list<int> >& mainChaine, std::list<std::list<int> >& pend)
+{
+    pairR.clear();
+    jacobSequence.clear();
+    sizeListPair /= 2; 
+    for (std::list<int>::iterator it = ListContainer.begin(); it != ListContainer.end(); std::advance(it, sizeListPair * 2))
+    {
+        std::list<int> LeftList2;
+        std::list<int> RightList2;
+        for (size_t j = 0; j < sizeListPair; j++)
+        {
+            if (it != ListContainer.end())
+            {
+                LeftList2.push_back(*it);
+                std::advance(it, 1);
+            }
+        }
+        for (size_t j = 0; j < sizeListPair; j++)
+        {
+            if (it != ListContainer.end())
+            {
+                RightList2.push_back(*it);
+                std::advance(it, 1);
+            }
+        }
+        LpairR.push_back(std::make_pair(LeftList2, RightList2));
+    }
+    mainChaine.clear();
+    pend.clear();
+    // for (const auto& p : LpairR)
+    // {
+    //     mainChaine.push_back(p.second);
+    //     pend.push_back(p.first);
+    // }
+    for (size_t i = 2; i < pend.size(); i++)
+    {
+        int jac = jacobsthal(i);
+        if (jac >= static_cast<int>(pend.size()))
+        {
+            jacobSequence.push_back(pend.size() - 1);
+            break;
+        }
+        else
+            jacobSequence.push_back(jacobsthal(i));
+    }
+    if (!pend.empty())
+        mainChaine.insert(mainChaine.begin(), pend.front());  
+    if (pend.size() >= 2)
+    {
+        std::list<std::list<int> >::iterator listit = std::lower_bound(mainChaine.begin(), std::next(mainChaine.begin(), 2), pend.front(), CompareLowerBound_List);
+        mainChaine.insert(listit, pend.front());
+    }
+	(void)ListDyalXyata;
+    int begin = 2; 
+    for (size_t i = 0; i < jacobSequence.size(); i++)
+    {
+        int j = jacobSequence.at(i);
+        int tmp = j;
+        while (j >= begin)
+        {
+			std::list<std::list<int> >::iterator listit = mainChaine.begin();
+            // listit = std::lower_bound(mainChaine.begin(), mainChaine.end(), std::next(pend.begin(), j), CompareLowerBound_List);
+			std::list<std::list<int> >::iterator it = pend.begin();
+			std::advance(it, j);
+			listit = std::lower_bound(mainChaine.begin(), std::next(mainChaine.begin(), 2), it, CompareLowerBound_List);
+            mainChaine.insert(listit, pend.front());
+            j--;
+        }
+        begin = tmp + 1;
+    }
+	
+    // if (!ListDyalXyata.empty())
+    // {
+    //     std::list<std::list<int> >::iterator listit  = std::lower_bound(mainChaine.begin(), mainChaine.end(), ListDyalXyata, CompareLowerBound_List);
+    //     mainChaine.insert(listit, ListDyalXyata);
+    // }
+    // ListContainer.clear(); 
+    // for (const auto& subList : mainChaine)
+    // {
+    //     ListContainer.insert(ListContainer.end(), subList.begin(), subList.end());
+    // }
+}
+
+
+
 void	usingVector(PmergeMe& pmergeMe)
 {
 	pmergeMe.printBefore();

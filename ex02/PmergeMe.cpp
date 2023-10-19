@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:48:27 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/18 17:15:01 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/19 10:13:07 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	PmergeMe::fillContainer(char **argv)
 	while (argv[i])
 	{
 		container.push_back(strtod(argv[i], NULL));
-		containerList.push_back(strtod(argv[i], NULL));
+		ListContainer.push_back(strtod(argv[i], NULL));
 		i++;
 	}
 	return 0;
