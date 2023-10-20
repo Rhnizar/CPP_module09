@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:47:54 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/21 00:07:07 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/21 00:21:40 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -349,8 +349,12 @@ void PmergeMe::ReverseRecursion_For_List(size_t sizeListPair, std::list<int>& Li
     {
 		std::list<std::list<int> >::iterator penIter = pend.begin();
 		std::advance(penIter, 1);
-        std::list<std::list<int> >::iterator listit = std::lower_bound(mainChaine.begin(), std::next(mainChaine.begin(), 2), *penIter, CompareLowerBound_List);
-        mainChaine.insert(listit, *penIter);
+		std::list<std::list<int> >::iterator nextit = mainChaine.begin();
+		std::advance(nextit, 2);
+        // std::list<std::list<int> >::iterator listit = std::lower_bound(mainChaine.begin(), std::next(mainChaine.begin(), 2), *penIter, CompareLowerBound_List);
+        std::list<std::list<int> >::iterator listit = std::lower_bound(mainChaine.begin(), nextit, *penIter, CompareLowerBound_List);
+        
+		mainChaine.insert(listit, *penIter);
     }
     int begin = 2; 
     for (size_t i = 0; i < jacobSequence.size(); i++)
