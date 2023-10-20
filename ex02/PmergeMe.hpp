@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:48:15 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/19 11:29:53 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/20 21:55:13 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ class PmergeMe
 		PmergeMe(){}
 		~PmergeMe(){}
 
+		int i;
+
 		/*list*/
 		std::list<int> ListContainer;
 		std::list<std::pair<std::list<int>, std::list<int> > > LpairR;
@@ -49,7 +51,8 @@ class PmergeMe
 		void	MergeInsertSort_For_List(size_t sizeListrPair);
 		void	LastRecursion_For_List(size_t sizeListPair,  std::list<int>& ListDyalXyata, std::list<std::list<int> >& mainChaine);
 		void	ReverseRecursion_For_List(size_t sizeVectorPair, std::list<int>& ListDyalXyata, std::list<std::list<int> >& mainChaine, std::list<std::list<int> >& pend);
-
+		void	printListBefore();
+		void	printListAfter();
 		
 		void	usingList(size_t sizeListPair);
 };

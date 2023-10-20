@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:48:27 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/19 10:13:07 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/21 00:04:33 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	PmergeMe::fillContainer(char **argv)
 
 void	PmergeMe::printBefore()
 {
-	std::cout << "Before: " << std::endl;
+	std::cout << "Before:	";
 	for(size_t i=0; i<container.size(); i++)
 		std::cout << container.at(i) << " ";
 	std::cout << std::endl;
@@ -59,9 +59,26 @@ void	PmergeMe::printBefore()
 
 void	PmergeMe::printAfter()
 {
-	std::cout << "\ncontainer after recursion :" << std::endl;
+	std::cout << "After:	";
 	for(size_t i=0; i<container.size(); i++)
 		std::cout << container.at(i) << " ";
+	std::cout << std::endl;
+}
+
+
+void	PmergeMe::printListBefore()
+{
+	std::cout << "Before: " << std::endl;
+	for(std::list<int>::iterator it=ListContainer.begin(); it != ListContainer.end(); it++)
+		std::cout << *it << " ";
+	std::cout << std::endl;
+}
+
+void	PmergeMe::printListAfter()
+{
+	std::cout << "\ncontainer after recursion :" << std::endl;
+	for(std::list<int>::iterator it=ListContainer.begin(); it != ListContainer.end(); it++)
+		std::cout << *it << " ";
 	std::cout << std::endl;
 }
 

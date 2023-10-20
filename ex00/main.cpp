@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 23:06:12 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/19 15:04:47 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/20 11:55:46 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	checkInput(std::ifstream& file, std::set<std::pair<std::string, std::string>
 	std::string month;
 	std::string day;
 	int checkLine1 = 0;
-	int	checkPoint = 0;
 	while (std::getline(file, line))
 	{
+		int	checkPoint = 0;
 		int check = 0;
 		if (line == "date | value" && checkLine1 == 0)
 		{
@@ -37,18 +37,25 @@ int	checkInput(std::ifstream& file, std::set<std::pair<std::string, std::string>
 		}
 		for(size_t i=0; i<line.length();i++)
 		{
+			// if ((check == 1 && line[i] == '.' && line[i + 1] != '\0' && (line[i - 1] == ' ' || line[i - 1] == '|')))
+			if (check == 1 && line[i] == '.' && line[i + 1] != '\n')
+			{
+				std::cerr << "Error: bad input => " << line << std::endl;
+				check = -9;
+				break;
+			}
 			if (line[i] == '.')
 				checkPoint++;
 			if ((line[i] == '-' && check == 0 && i == 4) || (line[i] == '-' && check == 0 && i == 7))
 				continue;
-			else if (line[i] == '-' && check == 1)
+			else if (line[i] == '-' && check == 1 && (line[i - 1] != ' ' || line[i - 1] != '|'))
 			{
 				std::cerr << "Error: not a positive number." << std::endl;
 				check = -9;
 				break;
 			}
 			else if ((isdigit(line[i]) == 0 && line[i] != '-' && line[i] != ' ' &&  line[i] != '|' && line[i] != '.')\
-				 || (line[i] == '-' && i != 4 && i != 7) || (checkPoint > 1))
+				 || (line[i] == '-' && i != 4 && i != 7) || (checkPoint > 1) || (line[i] == '|' && i != 11))
 			{
 				std::cerr << "Error: bad input => " << line << std::endl;
 				check = -9;
