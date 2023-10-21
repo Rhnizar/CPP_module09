@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 23:06:12 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/20 11:55:46 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/21 10:59:35 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	checkInput(std::ifstream& file, std::set<std::pair<std::string, std::string>
 		}
 		for(size_t i=0; i<line.length();i++)
 		{
-			// if ((check == 1 && line[i] == '.' && line[i + 1] != '\0' && (line[i - 1] == ' ' || line[i - 1] == '|')))
-			if (check == 1 && line[i] == '.' && line[i + 1] != '\n')
+			if ((check == 1 && line[i] == '.' && line[i - 1] == ' ' && i == line.length() -1) \
+			|| (check == 1 && line[i] == '-' && i == line.length() -1))
 			{
 				std::cerr << "Error: bad input => " << line << std::endl;
 				check = -9;
@@ -63,6 +63,28 @@ int	checkInput(std::ifstream& file, std::set<std::pair<std::string, std::string>
 			}
 			if (line[i] == '|')
 			{
+				std::string lineTmp = &(line[i]);
+				int r=1;
+				int CheckSpace = 0;
+				if(lineTmp[r] == '\0' || lineTmp[r] != ' ')
+				{
+					std::cerr << "Error: bad input => " << line << std::endl;
+					check = -9;
+				}
+				while(lineTmp[r])
+				{
+					if(lineTmp[r] == ' ')
+						CheckSpace++;
+					if(CheckSpace > 1)
+					{
+						std::cerr << "Error: bad input => " << line << std::endl;
+						check = -9;
+						break;
+					}
+					r++;
+				}
+				if(check == -9)
+					break;
 				check++;
 				i++;
 			}

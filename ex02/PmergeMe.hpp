@@ -6,7 +6,7 @@
 /*   By: rrhnizar <rrhnizar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:48:15 by rrhnizar          #+#    #+#             */
-/*   Updated: 2023/10/20 21:55:13 by rrhnizar         ###   ########.fr       */
+/*   Updated: 2023/10/21 00:57:07 by rrhnizar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <ctime>
 #include <cmath>
 #include <list>
-#include <algorithm>
+// #include <algorithm>
 
 
 class PmergeMe
@@ -53,8 +53,6 @@ class PmergeMe
 		void	ReverseRecursion_For_List(size_t sizeVectorPair, std::list<int>& ListDyalXyata, std::list<std::list<int> >& mainChaine, std::list<std::list<int> >& pend);
 		void	printListBefore();
 		void	printListAfter();
-		
-		void	usingList(size_t sizeListPair);
 };
 
 int	isInteger(std::string str);
